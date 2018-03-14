@@ -1,11 +1,14 @@
 package tradingbot
 
 import grails.validation.ValidationException
+import tradingbot.bitfinex.BitfinexService
+
 import static org.springframework.http.HttpStatus.*
 
 class TradeController {
 
     TradeService tradeService
+    BitfinexService bitfinexService;
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -25,14 +28,16 @@ class TradeController {
     }
     
     def buy() {
+        BigDecimal usd = bitfinexService.getBtcUsd()
+        println " :: usd: "  + usd
         
         // Get the last trade
-        Trade lastTrade = tradeService.list(max: 1, sort: "date", order: "desc")
+        Trade lastTrade = tradeService.list(max: 1, sort: "date", order: "desc")[0]
         
         if (!lastTrade || lastTrade.getTradeType().equals(TradeType.SHORT)) {
             Trade trade = new Trade()
             trade.setAmountUSD(4000)
-            trade.setExchangeRateBTC(9323.45)
+            trade.setExchangeRateBTC(usd)
             trade.setTradeType(TradeType.LONG)
 
             tradeService.save(trade)
@@ -47,14 +52,16 @@ class TradeController {
     }
     
     def sell() {
+        BigDecimal usd = bitfinexService.getBtcUsd()
+        println " :: usd: "  + usd
         
         // Get the last trade
-        Trade lastTrade = tradeService.list(max: 1, sort: "date", order: "desc")
+        Trade lastTrade = tradeService.list(max: 1, sort: "date", order: "desc")[0]
         
-        if (!lastTrade || lastTrade.getTradeType().equals(TradeType.LONG)) {
+        if (lastTrade && lastTrade.getTradeType().equals(TradeType.LONG)) {
             Trade trade = new Trade()
             trade.setAmountUSD(4000)
-            trade.setExchangeRateBTC(9323.45)
+            trade.setExchangeRateBTC(usd)
             trade.setTradeType(TradeType.SHORT)
         
             tradeService.save(trade)
