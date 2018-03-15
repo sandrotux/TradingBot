@@ -24,8 +24,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/#">
-		    <asset:image src="grails.svg" alt="Grails Logo"/>
+                <a class="navbar-brand" href="/#" style="width: 800px;">
+		    <asset:image src="grails.svg" alt="Grails Logo" style="display: inline;"/>
+                    Sander Trading Bot 1.0
                 </a>
             </div>
             <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">

@@ -1,6 +1,7 @@
 package tradingbot
 
 class Trade {
+    
     TradeType tradeType
     BigDecimal amountUSD
     BigDecimal exchangeRateBTC
