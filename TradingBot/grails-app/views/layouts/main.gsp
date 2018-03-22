@@ -1,15 +1,17 @@
 <!doctype html>
 <html lang="en" class="no-js">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>
-        <g:layoutTitle default="Grails"/>
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>
+            <g:layoutTitle default="Grails"/>
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 
     <asset:stylesheet src="application.css"/>
+    <asset:stylesheet src="bootstrap2-toggle.min.css"/>
+    <asset:javascript src="bootstrap2-toggle.min.js"/>
 
     <g:layoutHead/>
 </head>
@@ -25,7 +27,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/#" style="width: 800px;">
-		    <asset:image src="grails.svg" alt="Grails Logo" style="display: inline;"/>
+                    <!--<asset:image src="grails.svg" alt="Grails Logo" style="display: inline;"/>-->
+                    <asset:image src="bot.png" alt="Bot" style="display: inline;"/>
                     Sander Trading Bot 1.0
                 </a>
             </div>
@@ -45,7 +48,7 @@
         <g:message code="spinner.alt" default="Loading&hellip;"/>
     </div>
 
-    <asset:javascript src="application.js"/>
+<asset:javascript src="application.js"/>
 
 </body>
 </html>

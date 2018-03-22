@@ -8,7 +8,9 @@ import static org.springframework.http.HttpStatus.*
 class TradeController {
 
     TradeService tradeService
-    BitfinexService bitfinexService;
+    BitfinexService bitfinexService
+    ParamsService paramsService
+    Params config
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -16,7 +18,11 @@ class TradeController {
         params.max = Math.min(max ?: 10, 100)
         params.sort = "date"
         params.order = "desc"
-        respond tradeService.list(params), model:[tradeCount: tradeService.count()]
+        
+        // Get the config
+        config = paramsService.get(1)
+        
+        respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config]
     }
 
     def show(Long id) {
