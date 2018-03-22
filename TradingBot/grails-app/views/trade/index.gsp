@@ -9,32 +9,37 @@
 
         <style>
             .toggle.btn {
-                width: 120px!important;
+                width: 100%!important;
                 height: 30px!important;
             }
         </style>
 
         <a href="#list-trade" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
+<!--        <div class="nav" role="navigation">
             <ul>
                 <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
                 </ul>
+            </div>-->
 
+        <div class="row" style="background-color: #ddd;margin-bottom: 5px;">
             <div class="col-sm-3"></div>
-            <div class="col-sm-6" style="top: -26px;">
+            <div class="col-sm-6 text-center">
                 <div class="row">
-                    <div class="col-sm-2"><label>STATUS: </label></div>
-                    <div class="col-sm-3"><span style="font-weight: bold; color: #30a530;">RUNNING</span></div>
-                    <div class="col-sm-2">
-                        <label for="inAmount">AMOUNT:</label>
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="col-sm-4 col-xs-6"><label>STATUS: </label></div>
+                        <div class="col-sm-4 col-xs-6"><span style="font-weight: bold; color: #5cb85c;">RUNNING</span></div>
                     </div>
-                    <div class="col-sm-5">
-                        <span>${config?.amountTrade}</span>
+                    <div class="col-sm-6 col-xs-6">
+                        <div class="col-sm-4 col-xs-6">
+                            <label for="inAmount">AMOUNT:</label>
+                        </div>
+                        <div class="col-sm-4 col-xs-6">
+                            <span>${config?.amountTrade}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3"></div>
         </div>
 
         <div class="row" style="padding:0;">
@@ -50,7 +55,7 @@
                             <div class="form-group">
                                 <input type="number" id="inAmount" class="form-control"/>
                             </div>
-                            <button type="button" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-primary" style="float:right">Save</button>
                         </form>
                     </div>
                 </div>

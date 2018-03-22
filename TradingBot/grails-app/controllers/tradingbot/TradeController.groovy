@@ -33,7 +33,14 @@ class TradeController {
         respond new Trade(params)
     }
     
+    /**
+     *  Buys BTC
+     **/
     def buy() {
+        // Get the config
+        config = paramsService.get(1)
+        
+        // Get the exchange rate
         BigDecimal usd = bitfinexService.getBtcUsd()
         println " :: usd: "  + usd
         
@@ -54,10 +61,17 @@ class TradeController {
         params.max = Math.min(10, 100)
         params.sort = "date"
         params.order = "desc"
-        respond tradeService.list(params), model:[tradeCount: tradeService.count()]
+        respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'
     }
     
+    /**
+     * Sells BTC
+     **/
     def sell() {
+        // Get the config
+        config = paramsService.get(1)
+        
+        // Get the exchange rate
         BigDecimal usd = bitfinexService.getBtcUsd()
         println " :: usd: "  + usd
         
@@ -78,7 +92,7 @@ class TradeController {
         params.max = Math.min(10, 100)
         params.sort = "date"
         params.order = "desc"
-        respond tradeService.list(params), model:[tradeCount: tradeService.count()]
+        respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'
     }
 
     def save(Trade trade) {
@@ -154,5 +168,21 @@ class TradeController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+    
+    /**
+     * Controles the bot status
+     **/
+    def toggleBotStatus(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        params.sort = "date"
+        params.order = "desc"
+        
+        // Get the config
+        config = paramsService.get(1)
+        this.config.running = !this.config.running;
+        paramsService.save(config)
+        
+        respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'
     }
 }
