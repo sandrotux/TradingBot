@@ -37,19 +37,22 @@ class TradeController {
      *  Buys BTC
      **/
     def buy() {
-        // Get the config
-        config = paramsService.get(1)
+        config = paramsService.get(1)   // Get the config
         
-        // Get the exchange rate
-        BigDecimal usd = bitfinexService.getBtcUsd()
-        println " :: usd: "  + usd
+        println " :: running: " + config.running
+        if (!config.running) {
+            respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'  // do nothing
+            return
+        }
         
-        // Get the last trade
-        Trade lastTrade = tradeService.list(max: 1, sort: "date", order: "desc")[0]
+        BigDecimal usd = bitfinexService.getBtcUsd()    // Get the exchange rate
+        println " :: USD excahnge rate: "  + usd
+        
+        Trade lastTrade = tradeService.list(max: 1, sort: "date", order: "desc")[0]     // Get the last trade
         
         if (!lastTrade || lastTrade.getTradeType().equals(TradeType.SHORT)) {
             Trade trade = new Trade()
-            trade.setAmountUSD(4000)
+            trade.setAmountUSD(config.amountTrade)
             trade.setExchangeRateBTC(usd)
             trade.setTradeType(TradeType.LONG)
 
@@ -68,19 +71,22 @@ class TradeController {
      * Sells BTC
      **/
     def sell() {
-        // Get the config
-        config = paramsService.get(1)
+        config = paramsService.get(1)   // Get the config
         
-        // Get the exchange rate
-        BigDecimal usd = bitfinexService.getBtcUsd()
-        println " :: usd: "  + usd
+        println " :: running: " + config.running
+        if (!config.running) {
+            respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'  // do nothing
+            return
+        }
         
-        // Get the last trade
-        Trade lastTrade = tradeService.list(max: 1, sort: "date", order: "desc")[0]
+        BigDecimal usd = bitfinexService.getBtcUsd()    // Get the exchange rate
+        println " :: USD exchange rate: "  + usd
+        
+        Trade lastTrade = tradeService.list(max: 1, sort: "date", order: "desc")[0]     // Get the last trade
         
         if (lastTrade && lastTrade.getTradeType().equals(TradeType.LONG)) {
             Trade trade = new Trade()
-            trade.setAmountUSD(4000)
+            trade.setAmountUSD(config.amountTrade)
             trade.setExchangeRateBTC(usd)
             trade.setTradeType(TradeType.SHORT)
         
@@ -179,10 +185,27 @@ class TradeController {
         params.order = "desc"
         
         // Get the config
-        config = paramsService.get(1)
+        this.config = paramsService.get(1)
         this.config.running = !this.config.running;
         paramsService.save(config)
         
         respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'
     }
+    
+    /**
+     * Updates the trading amount
+     **/
+    def updateTradingAmount(BigDecimal tradingAmount, Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        params.sort = "date"
+        params.order = "desc"
+        
+        // Get the config
+        this.config = paramsService.get(1)
+        this.config.amountTrade = tradingAmount
+        paramsService.save(config)
+        
+        respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'
+    }
+    
 }

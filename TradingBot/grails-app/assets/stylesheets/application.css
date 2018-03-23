@@ -13,3 +13,11 @@
 *= require mobile
 *= require_self
 */
+
+a {
+    color: #337ab7;
+}
+
+a:hover {
+    color: #69a0d0;
+}

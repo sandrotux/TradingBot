@@ -9,9 +9,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <asset:link rel="icon" href="bot.ico" type="image/x-ico" />
 
-    <asset:stylesheet src="application.css"/>
-    <asset:stylesheet src="bootstrap2-toggle.min.css"/>
-    <asset:javascript src="bootstrap2-toggle.min.js"/>
+        <asset:stylesheet src="application.css"/>
+        <asset:stylesheet src="bootstrap2-toggle.min.css"/>
+        <asset:javascript src="bootstrap2-toggle.min.js"/>
+        <asset:javascript src="jquery-2.2.0.min.js"/>
 
     <g:layoutHead/>
 </head>
@@ -26,7 +27,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/#" style="width: 800px;">
+                <a class="navbar-brand" href="/trade/#" style="width: 800px;">
                     <!--<asset:image src="grails.svg" alt="Grails Logo" style="display: inline;"/>-->
                     <asset:image src="bot.png" alt="Bot" style="display: inline;"/>
                     Sander Trading Bot 1.0
