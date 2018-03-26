@@ -7,7 +7,7 @@ class ParamsController {
 
     ParamsService paramsService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [updateAmount: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -68,6 +68,23 @@ class ParamsController {
             }
             '*'{ respond params, [status: OK] }
         }
+    }
+    
+    /**
+     * Updates only the amount. And returns to the Trade views
+     **/
+    def updateAmount() {
+        params.max = Math.min(max ?: 10, 100)
+        params.sort = "date"
+        params.order = "desc"
+        
+        println "AMOUNT: " + params.inAmount
+        // Get the config
+        this.config = paramsService.get(1)
+        this.config.amountTrade = params.inAmount
+        paramsService.save(config)
+        
+        respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'
     }
 
     def delete(Long id) {

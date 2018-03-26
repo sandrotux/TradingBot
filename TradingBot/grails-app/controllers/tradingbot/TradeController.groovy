@@ -195,14 +195,15 @@ class TradeController {
     /**
      * Updates the trading amount
      **/
-    def updateTradingAmount(BigDecimal tradingAmount, Integer max) {
+    def updateTradingAmount(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         params.sort = "date"
         params.order = "desc"
         
+        println "AMOUNT: " + params.tradingAmount
         // Get the config
         this.config = paramsService.get(1)
-        this.config.amountTrade = tradingAmount
+        this.config.amountTrade = params.tradingAmount
         paramsService.save(config)
         
         respond tradeService.list(params), model:[tradeCount: tradeService.count(), config: config], view: 'index'

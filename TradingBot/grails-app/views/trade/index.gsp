@@ -64,7 +64,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>CONFIG</strong></div>
                     <div class="panel-body" style="background-color: #eee;">
-                        <form>
+                        <g:form controller="params" action="updateAmount" method="POST">
                             <a id="url-toggle" style="display: none;" href="${createLink(controller: 'trade', action: 'toggleBotStatus')}">GM</a>
                             <div class="form-group" style="margin-top: 10px;">
                                 <input type="checkbox" id="chkToggleStatus" ${config?.running ? 'checked ' : ''} data-toggle="toggle" data-on="RUNNING" data-off="STOPED" data-onstyle="success" data-offstyle="danger">
@@ -73,8 +73,8 @@
                                 <label for="inAmount">Amount:</label>
                                 <g:field id="inAmount" name="inAmount" value="${config?.amountTrade}" class="form-control" type="number" />
                             </div>
-                            <button type="button" class="btn btn-primary" style="float:right">Save</button>
-                        </form>
+                            <g:actionSubmit value="Save" class="btn btn-primary right" />
+                        </g:form>
                     </div>
                 </div>
             </div>
